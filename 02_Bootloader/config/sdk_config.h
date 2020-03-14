@@ -71,6 +71,23 @@
 #define NRF_BL_APP_CRC_CHECK_SKIPPED_ON_SYSTEMOFF_RESET 1
 #endif
 
+// <q> NRF_BL_APP_SIGNATURE_CHECK_REQUIRED  - Perform signature check on the app. Requires the signature to be sent in the init packet.
+ 
+
+#ifndef NRF_BL_APP_SIGNATURE_CHECK_REQUIRED
+#define NRF_BL_APP_SIGNATURE_CHECK_REQUIRED 0
+#endif
+
+// <q> NRF_BL_DFU_ALLOW_UPDATE_FROM_APP  - Whether to allow the app to receive firmware updates for the bootloader to activate.
+ 
+
+// <i> Enable this to allow the app to instruct the bootloader to activate firmware.
+// <i> The bootloader will do its own postvalidation.
+
+#ifndef NRF_BL_DFU_ALLOW_UPDATE_FROM_APP
+#define NRF_BL_DFU_ALLOW_UPDATE_FROM_APP 0
+#endif
+
 // </h> 
 //==========================================================
 
@@ -127,7 +144,7 @@
  
 
 #ifndef NRF_BL_DFU_ENTER_METHOD_PINRESET
-#define NRF_BL_DFU_ENTER_METHOD_PINRESET 0
+#define NRF_BL_DFU_ENTER_METHOD_PINRESET 1
 #endif
 
 // <q> NRF_BL_DFU_ENTER_METHOD_GPREGRET  - Enter DFU mode when bit 1 (0-indexed) is set in the NRF_POWER_GPREGRET register.
@@ -168,7 +185,7 @@
 // <i> If 0, no inactivity timer will be used. Values 1-99 are invalid.
 
 #ifndef NRF_BL_DFU_INACTIVITY_TIMEOUT_MS
-#define NRF_BL_DFU_INACTIVITY_TIMEOUT_MS 120000
+#define NRF_BL_DFU_INACTIVITY_TIMEOUT_MS 3000
 #endif
 
 // </h> 
@@ -1063,7 +1080,7 @@
  
 
 #ifndef NRF_DFU_REQUIRE_SIGNED_APP_UPDATE
-#define NRF_DFU_REQUIRE_SIGNED_APP_UPDATE 1
+#define NRF_DFU_REQUIRE_SIGNED_APP_UPDATE 0
 #endif
 
 // <q> NRF_DFU_SINGLE_BANK_APP_UPDATES  - Place the application and the SoftDevice directly where they are supposed to be.
@@ -1080,6 +1097,13 @@
 // </h> 
 //==========================================================
 
+// <q> NRF_DFU_SETTINGS_COMPATIBILITY_MODE  - nrf_dfu_settings - DFU Settings
+ 
+
+#ifndef NRF_DFU_SETTINGS_COMPATIBILITY_MODE
+#define NRF_DFU_SETTINGS_COMPATIBILITY_MODE 1
+#endif
+
 // <h> Misc DFU settings 
 
 //==========================================================
@@ -1090,6 +1114,19 @@
 
 #ifndef NRF_DFU_APP_DATA_AREA_SIZE
 #define NRF_DFU_APP_DATA_AREA_SIZE 12288
+#endif
+
+// <q> NRF_DFU_IN_APP  - Specifies that this code is in the app, not the bootloader, so some settings are off-limits.
+ 
+
+// <i> Enable this to disable writing to areas of the settings that are protected
+// <i> by the bootlader. If this is not enabled in the app, certain settings write
+// <i> operations will cause HardFaults or will be ignored. Enabling this option
+// <i> also causes postvalidation to be disabled since this is meant to be done
+// <i> in the bootloader. NRF_BL_DFU_ALLOW_UPDATE_FROM_APP must be enabled in the bootloader.
+
+#ifndef NRF_DFU_IN_APP
+#define NRF_DFU_IN_APP 0
 #endif
 
 // <q> NRF_DFU_SAVE_PROGRESS_IN_FLASH  - Save DFU progress in flash.

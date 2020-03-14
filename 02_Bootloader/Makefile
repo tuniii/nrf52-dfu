@@ -1,8 +1,8 @@
 TARGETS          := nrf52832_xxaa_mbr
 PROJ_DIR         := .
 OUTPUT_DIRECTORY := _build
-SDK_ROOT         := ../sdk/nRF5_SDK_15.2.0_9412b96
-SOFT_DEVICE      := "${SDK_ROOT}/components/softdevice/s132/hex/s132_nrf52_6.1.0_softdevice.hex"
+SDK_ROOT         := ../sdk/nRF5_SDK_15.3.0_59ac345
+SOFT_DEVICE      := "${SDK_ROOT}/components/softdevice/s132/hex/s132_nrf52_6.1.1_softdevice.hex"
 
 GNU_INSTALL_ROOT := ../toolchain/gcc-arm-none-eabi-7-2018-q2-update/bin/
 GNU_VERSION      := 7.3.1
@@ -98,6 +98,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/nrf_oberon/include \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon \
   $(SDK_ROOT)/components/libraries/crypto/backend/cifra \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310_bl \
@@ -135,7 +136,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # Optimization flags
@@ -166,6 +167,7 @@ CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin -fshort-enums -flto
 CFLAGS += -DHW_DEVICE_ID=${HW_DEVICE_ID}
+CFLAGS += -ggdb
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
