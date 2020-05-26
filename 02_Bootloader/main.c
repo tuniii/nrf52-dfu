@@ -109,7 +109,7 @@ void printWelcomeMessage()
     uart_config.p_context = NULL;
     uart_config.hwfc = NRF_UART_HWFC_DISABLED;
     uart_config.parity = NRF_UART_PARITY_EXCLUDED;
-    uart_config.baudrate = NRF_UART_BAUDRATE_57600;
+    uart_config.baudrate = NRF_UART_BAUDRATE_115200;
     uart_config.interrupt_priority = 3;
 
     uint32_t ret_val = nrf_drv_uart_init(&uart_inst, &uart_config, NULL);
