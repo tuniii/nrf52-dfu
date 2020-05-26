@@ -15,7 +15,6 @@ jobs:
         
     - name: Install SDK
       run: |
-        apt-get install unzip
         mkdir sdk
         mkdir toolchain
         cd sdk
