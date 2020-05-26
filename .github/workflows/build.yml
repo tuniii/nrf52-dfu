@@ -21,7 +21,7 @@ jobs:
         wget https://www.nordicsemi.com/-/media/Software-and-other-downloads/SDKs/nRF5/Binaries/nRF5SDK153059ac345.zip
         unzip nRF5SDK153059ac345.zip
         cd ../toolchain
-        wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/7-2018q2/gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
+        wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/7-2018q2/gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2 -O gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
         tar xjf gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
         cd ..
         patch -p0 < nrfx_uart.patch
