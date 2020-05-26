@@ -13,7 +13,7 @@ jobs:
       with:
         submodules: true      
         
-    - name: Install SDK
+    - name: Install toolchain
       run: |
         mkdir sdk
         mkdir toolchain
@@ -24,8 +24,11 @@ jobs:
         wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/7-2018q2/gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2 -O gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
         tar xjf gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
         cd ..
+        wget https://www.nordicsemi.com/api/sitecore/Products/DownloadPlatform --post-data=fileid=8F19D314130548209E75EFFADD9348DB -O cli-tools.tar
+        tar -xv -f cli-tools.tar
+        echo "::add-path::$GITHUB_WORKSPACE/mergehex"
         patch -p0 < nrfx_uart.patch
-        pushd sdk/nRF5_SDK_15.2.0_9412b96/external/micro-ecc
+        pushd sdk/nRF5_SDK_15.3.0_59ac345/external/micro-ecc
         export GNU_INSTALL_ROOT="$PWD/../../../../toolchain/gcc-arm-none-eabi-7-2018-q2-update/bin/"
         git clone https://github.com/kmackay/micro-ecc.git
         make -C nrf52hf_armgcc/armgcc
@@ -35,6 +38,11 @@ jobs:
     - name: Build
       run: |
         cd 02_Bootloader
-        clean
         make
         make hex
+        mkdir -p $GITHUB_WORKSPACE/artifacts
+        cp ./_build/bootloader_softdevice.hex $GITHUB_WORKSPACE/artifacts/bootloader_softdevice.hex
+    - uses: actions/upload-artifact@v1
+      with:
+        name: bootloader_softdevice
+        path: ./artifacts
